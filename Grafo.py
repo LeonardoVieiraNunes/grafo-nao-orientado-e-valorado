@@ -33,7 +33,7 @@ class Grafo:
     def peso(self, v1, v2):
         return self.adj[v1-1][v2-1]
 
-    def addVertice(self, nro, rotulo):
+    def addVertice(self, nro, rotulo=None):
         self.vertices.append((nro, rotulo))
         self.addLinhasEColunas()
 
@@ -46,30 +46,18 @@ class Grafo:
         for i in self.adj:
             i.append(float('inf'))
 
-    def addAresta(self, v1, v2, peso):
+    def addVertices(self, vertices):
+        for v in vertices:
+            self.addVertice(v)
+    
+    def addArestas(self, arestas):
+        for v in arestas:
+            self.addAresta(v[0], v[1])
+
+    def addAresta(self, v1, v2, peso=1):
         self.adj[v1-1][v2-1] = peso
         self.adj[v2-1][v1-1] = peso
         self.nroArestas += 1
-
-# ---debug----
-# g1 = Grafo()
-# g1.addVertice(1, "A")
-# g1.addVertice(2, "B")
-# g1.addVertice(3, "C")
-# # print(g1.adj)
-
-# g1.addAresta(1, 1, 7)
-# g1.addAresta(2, 1, 9)
-
-# print(g1.adj)
-
-# print(g1.grau(2))
-# print(g1.rotulo(3))
-# print(g1.vizinhos(1))
-# print(g1.haAresta(1,2))
-# print(g1.peso(1,2))
-
-
 
 
 
