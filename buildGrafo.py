@@ -1,3 +1,5 @@
+from Grafo import Grafo
+
 def buildGrafo():
     g1 = Grafo()
 

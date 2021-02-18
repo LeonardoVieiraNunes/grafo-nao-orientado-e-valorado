@@ -52,7 +52,7 @@ class Grafo:
     
     def addArestas(self, arestas):
         for v in arestas:
-            self.addAresta(v[0], v[1])
+            self.addAresta(v[0], v[1], v[2])
 
     def addAresta(self, v1, v2, peso=1):
         self.adj[v1-1][v2-1] = peso
