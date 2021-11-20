@@ -1,5 +1,5 @@
 from Grafo import Grafo
-
+from lerEntrada import grafoDeEntrada
 
 def cicloEureliano(gfo):
     global c
@@ -52,21 +52,21 @@ def buscarSubCicloEuleriano(gfo, vert, c):
 
     return (True, caminho)
 
-g1 = Grafo()
+# g1 = Grafo()
+#
+# arestasNe = [(1,2),(1,6),(2,3),(3,6),(3,4),(4,5)]
+# verticesNe = [1,2,3,4,5,6]
+#
+# arestasCe = [(1,2),(1,6),(2,3),(3,6),(3,4),(3,5),(4,5)]
+# verticesCe = [1,2,3,4,5,6]
+#
+# arestasTeste = [(1,2),(2,3),(3,4),(4,1),(2,5),(2,6),(5,6)]
+# verticesTeste = [1,2,3,4,5,6]
 
-arestasNe = [(1,2),(1,6),(2,3),(3,6),(3,4),(4,5)]
-verticesNe = [1,2,3,4,5,6]
-
-arestasCe = [(1,2),(1,6),(2,3),(3,6),(3,4),(3,5),(4,5)]
-verticesCe = [1,2,3,4,5,6]
-
-arestasTeste = [(1,2),(2,3),(3,4),(4,1),(2,5),(2,6),(5,6)]
-verticesTeste = [1,2,3,4,5,6]
-
-g1 = Grafo()
-g1.addVertices(verticesCe)
-g1.addArestas(arestasCe)
-
+# g1 = Grafo()
+# g1.addVertices(verticesCe)
+# g1.addArestas(arestasCe)
+g1 = grafoDeEntrada('entrada.txt')
 (isCicloEureliano, caminho) = cicloEureliano(g1)
 
 if (isCicloEureliano):

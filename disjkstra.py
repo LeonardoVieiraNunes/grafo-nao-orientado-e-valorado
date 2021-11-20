@@ -1,6 +1,6 @@
 from Grafo import Grafo
 from buildGrafo import buildGrafo
-
+from lerEntrada import grafoDeEntrada
 
 def dijkstra(gfo, s):
     caminhos = [[] for i in range(gfo.qtdVertices())]
@@ -57,9 +57,10 @@ def test():
     vertices = [1,2,3,4,5,6,7,8,9,10]
     arestas = [(1,2,350),(1,4,4100),(1,9,8300),(1,10,3700),(2,10,6600),(2,3,6000),(3,7,5600),(3,8,4900),(3,9,9500),(4,5,1500),(4,10,2000),(5,6,8800),(5,10,3100),(7,8,3400),(7,9,12500),(8,9,12000),(9,10,14000)]
 
-    g1 = Grafo()
-    g1.addVertices(vertices)
-    g1.addArestas(arestas)
+    # g1 = Grafo()
+    # g1.addVertices(vertices)
+    # g1.addArestas(arestas)
+    g1 = grafoDeEntrada('entrada.txt')
     dijkstra(g1, 6)
 
 test()
