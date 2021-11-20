@@ -1,4 +1,5 @@
 from Grafo import Grafo
+from lerEntrada import grafoDeEntrada
 
 def busca(gfo, vert):
     buffer = [vert]
@@ -27,24 +28,24 @@ def busca(gfo, vert):
         
 
 
-g1 = Grafo()
+g1 = grafoDeEntrada("entrada.txt")
 
-g1.addVertice(1, "A")
-g1.addVertice(2, "B")
-g1.addVertice(3, "C")
-g1.addVertice(4, "D")
-g1.addVertice(5, "E")
-g1.addVertice(6, "F")
-g1.addVertice(7, "G")
-g1.addVertice(8, "G")
-
-g1.addAresta(8, 3, 1)
-g1.addAresta(8, 4, 1)
-g1.addAresta(8, 5, 1)
-
-g1.addAresta(3, 1, 1)
-g1.addAresta(3, 2, 1)
-g1.addAresta(3, 6, 1)
-g1.addAresta(3, 7, 1)
+# g1.addVertice(1, "A")
+# g1.addVertice(2, "B")
+# g1.addVertice(3, "C")
+# g1.addVertice(4, "D")
+# g1.addVertice(5, "E")
+# g1.addVertice(6, "F")
+# g1.addVertice(7, "G")
+# g1.addVertice(8, "G")
+#
+# g1.addAresta(8, 3, 1)
+# g1.addAresta(8, 4, 1)
+# g1.addAresta(8, 5, 1)
+#
+# g1.addAresta(3, 1, 1)
+# g1.addAresta(3, 2, 1)
+# g1.addAresta(3, 6, 1)
+# g1.addAresta(3, 7, 1)
 
 busca(g1, 8)
