@@ -10,10 +10,11 @@ def grafoDeEntrada(path):
         vert = int(vert)
         if len(temp) >1 :
             label = temp[1]
+            # ajustar pra pegar nome composto
             grafo.addVertice(vert,label)
         else:
             grafo.addVertice(vert)
-        grafo.addVertice(vert)
+        # grafo.addVertice(vert)
 
     indice_arestas = len_vertices+2
     for j in range(indice_arestas,len(linhas)):
