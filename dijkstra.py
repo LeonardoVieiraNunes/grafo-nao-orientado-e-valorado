@@ -10,7 +10,6 @@ def dijkstra(gfo: Grafo, s):
 
     while False in verticesVisitados:
 
-        # distanciaVertices.index()
         u = menorVertice(distanciaVertices, verticesVisitados)
         verticesVisitados[u] = True
 
@@ -36,5 +35,5 @@ def menorVertice(distanciaVertices, verticesVisitados):
 
 
 def test():
-    g1 = grafoDeEntrada('entrada.txt')
+    g1 = grafoDeEntrada('casos-de-teste/fln_pequena.txt')
     print(dijkstra(g1, 6))

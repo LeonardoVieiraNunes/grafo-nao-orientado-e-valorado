@@ -1,51 +1,27 @@
 from Grafo import Grafo
 from lerEntrada import grafoDeEntrada
 
-def busca(gfo, vert):
-    buffer = [vert]
-    newBuffer = []
-    nivel = 0
-    visitado = list([-1] * gfo.qtdVertices())
+def busca(gfo: Grafo, s: int):
+    distanciaVertices = [float('inf') for i in range(gfo.qtdVertices())]
+    ancestral = [None for i in range(gfo.qtdVertices())]
+    verticesVisitados = [False for i in range(gfo.qtdVertices())]
 
-    while(len(buffer)):
-        print(f'{nivel}: {",".join(str(x) for x in buffer)}')
-        vertice = buffer[0]
-        
-        for v in buffer:
-            if visitado[v-1] == -1:
-                visitado[v-1] = nivel
+    distanciaVertices[s-1] = 0
+    verticesVisitados[s-1] = True
 
+    filaVisitas = []
+    filaVisitas.append(s-1)
 
-        vizinhos = gfo.vizinhos(vertice)
+    while len(filaVisitas) != 0:
+        u = filaVisitas.pop(0)
+        for v in gfo.vizinhos(u+1):
+            if not verticesVisitados[v - 1]:
+                verticesVisitados[v-1] = True
+                distanciaVertices[v-1] = distanciaVertices[u] + 1
+                ancestral[v-1] = u+1
+                filaVisitas = [v-1] + filaVisitas
+    return (distanciaVertices, ancestral)
 
-        for v in vizinhos:
-            if visitado[v-1] == -1:
-                newBuffer.append(v)
-        buffer = newBuffer
-        newBuffer = []
-        nivel += 1
-
-        
-
-
-g1 = grafoDeEntrada("entrada.txt")
-
-# g1.addVertice(1, "A")
-# g1.addVertice(2, "B")
-# g1.addVertice(3, "C")
-# g1.addVertice(4, "D")
-# g1.addVertice(5, "E")
-# g1.addVertice(6, "F")
-# g1.addVertice(7, "G")
-# g1.addVertice(8, "G")
-#
-# g1.addAresta(8, 3, 1)
-# g1.addAresta(8, 4, 1)
-# g1.addAresta(8, 5, 1)
-#
-# g1.addAresta(3, 1, 1)
-# g1.addAresta(3, 2, 1)
-# g1.addAresta(3, 6, 1)
-# g1.addAresta(3, 7, 1)
-
-busca(g1, 8)
+def test():
+    g1 = grafoDeEntrada("casos-de-teste/busca.txt")
+    print(busca(g1, 1))

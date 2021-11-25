@@ -14,7 +14,6 @@ def grafoDeEntrada(path):
             grafo.addVertice(vert,label)
         else:
             grafo.addVertice(vert)
-        # grafo.addVertice(vert)
 
     indice_arestas = len_vertices+2
     for j in range(indice_arestas,len(linhas)):
@@ -22,13 +21,9 @@ def grafoDeEntrada(path):
         v1= int(temp[0])
         v2 = int(temp[1])
         if len(temp) >2:
-            peso = int(temp[2])
+            peso = float(temp[2])
             grafo.addAresta(v1, v2, peso)
         else:
             grafo.addAresta(v1, v2)
 
     return grafo
-
-
-if __name__ == "__main__":
-    test = grafoDeEntrada("entrada.txt")
