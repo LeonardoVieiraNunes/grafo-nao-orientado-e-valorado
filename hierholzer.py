@@ -55,7 +55,7 @@ def buscarSubCicloEuleriano(gfo, v, arestasVisitadas):
     return True, ciclo
 
 
-def test():
+if __name__ == "__main__":
     g1 = grafoDeEntrada('casos-de-teste/contem-ciclo-euleriano.txt')
     (isCicloEureliano, caminho) = hierholzer(g1)
     print(isCicloEureliano, caminho)

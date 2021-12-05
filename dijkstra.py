@@ -34,6 +34,6 @@ def menorVertice(distanciaVertices, verticesVisitados):
 
 
 
-def test():
+if __name__ == "__main__":
     g1 = grafoDeEntrada('casos-de-teste/fln_pequena.txt')
     print(dijkstra(g1, 6))
