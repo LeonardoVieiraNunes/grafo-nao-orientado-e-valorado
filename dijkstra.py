@@ -18,7 +18,7 @@ def dijkstra(gfo: Grafo, s):
         for v in vizinhosNaoVisitados:
             if distanciaVertices[v - 1] > distanciaVertices[u] + gfo.peso(v, u+1):
                 distanciaVertices[v - 1] = distanciaVertices[u] + gfo.peso(v, u+1)
-                caminhos[v-1] = caminhos[u-1] + [v]
+                caminhos[v-1] = caminhos[u] + [v]
                 ancestral[v - 1] = u+1
 
     return distanciaVertices, ancestral, caminhos
