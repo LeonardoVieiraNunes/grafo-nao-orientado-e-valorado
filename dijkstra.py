@@ -26,7 +26,7 @@ def dijkstra(gfo: Grafo, s):
 def menorVertice(distanciaVertices, verticesVisitados):
     greater = float('inf')
     for i in range(len(distanciaVertices)):
-        if (verticesVisitados[i] == False and distanciaVertices[i] < greater):
+        if verticesVisitados[i] == False and distanciaVertices[i] < greater:
             greater = i
 
     return greater
