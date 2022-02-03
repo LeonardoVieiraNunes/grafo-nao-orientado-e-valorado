@@ -2,66 +2,68 @@ from Grafo import Grafo
 from lerEntrada import grafoDeEntrada
 import numpy as np
 
-def dfsAdaptado(gfo: Grafo, tFimOrdenado):
-    verticesVisitadosT, tInicioT, tFimT, ancestralT = dict(), dict(), dict(), dict()
-    for v in gfo.get_id_vertices():
-        verticesVisitadosT[v] = False
-        tInicioT[v] = float('inf')
-        tFimT[v] = float('inf')
-        ancestralT[v] = None
 
-    tempo = 0
+class CFC():
+    def __init__(self):
+        self.tempoDfs = 0
+        self.tempoDfsAdaptado = 0
 
-    for u in tFimOrdenado:
-        if verticesVisitadosT[u] is False:
-            dfsVisit(gfo, u, verticesVisitadosT, tInicioT, tFimT, ancestralT, tempo)
+    def dfsVisit(self, gfo: Grafo, v, verticesVisitados, tInicio, tFim, ancestral, isAdaptado=False):
+        verticesVisitados[v] = True
+        if isAdaptado:
+            self.tempoDfsAdaptado += 1
+            tInicio[v] = self.tempoDfsAdaptado
+            for u in gfo.vizinhos(v):
+                if verticesVisitados[u] is False:
+                    ancestral[u] = v
+                    self.dfsVisit(gfo, u, verticesVisitados, tInicio, tFim, ancestral, isAdaptado=True)
 
-    return verticesVisitadosT, tInicioT, tFimT, ancestralT
+            self.tempoDfsAdaptado += 1
+            tFim[v] = self.tempoDfsAdaptado
+        else:
+            self.tempoDfs += 1
+            tInicio[v] = self.tempoDfs
+            for u in gfo.vizinhos(v):
+                if verticesVisitados[u] is False:
+                    ancestral[u] = v
+                    self.dfsVisit(gfo, u, verticesVisitados, tInicio, tFim, ancestral)
 
+            self.tempoDfs += 1
+            tFim[v] = self.tempoDfs
 
-def dfsVisit(gfo: Grafo, v, verticesVisitados, tInicio, tFim, ancestral, tempo):
-    verticesVisitados[v] = True
-    tempo += 1
-    tInicio[v] = tempo
-    for u in gfo.vizinhos(v):
-        if verticesVisitados[u] is False:
-            ancestral[u] = v
-            dfsVisit(gfo, u, verticesVisitados, tInicio, tFim, ancestral, tempo)
+    def dfs(self, gfo: Grafo, tFimOrdenado=False):
+        verticesVisitados, tInicio, tFim, ancestral = dict(), dict(), dict(), dict()
+        for v in gfo.get_id_vertices():
+            verticesVisitados[v] = False
+            tInicio[v] = float('inf')
+            tFim[v] = float('inf')
+            ancestral[v] = None
 
-    tempo += 1
-    tFim[v] = tempo
+        if tFimOrdenado:
+            for u in tFimOrdenado:
+                if verticesVisitados[u] is False:
+                    self.dfsVisit(gfo, u, verticesVisitados, tInicio, tFim, ancestral, isAdaptado=True)
+        else:
+            for u in gfo.get_id_vertices():
+                if verticesVisitados[u] is False:
+                    self.dfsVisit(gfo, u, verticesVisitados, tInicio, tFim, ancestral)
 
+        return verticesVisitados, tInicio, tFim, ancestral
 
-def dfs(gfo: Grafo):
-    verticesVisitados, tInicio, tFim, ancestral = dict(), dict(), dict(), dict()
-    for v in gfo.get_id_vertices():
-        verticesVisitados[v] = False
-        tInicio[v] = float('inf')
-        tFim[v] = float('inf')
-        ancestral[v] = None
+    def componentesFortementeConexas(self, gfo: Grafo):
+        verticesVisitados, tInicio, tFim, ancestral = self.dfs(gfo)
+        arcosT = np.matrix.tolist(np.transpose(gfo.adj))
 
-    tempo = 0
+        gfoT = Grafo()
+        gfoT.vertices = gfo.vertices
+        gfoT.adj = arcosT
 
-    for u in gfo.get_id_vertices():
-        if verticesVisitados[u] is False:
-            dfsVisit(gfo, u, verticesVisitados, tInicio, tFim, ancestral, tempo)
-
-    return verticesVisitados, tInicio, tFim, ancestral
-
-
-def componentesFortementeConexas(gfo: Grafo):
-    verticesVisitados, tInicio, tFim, ancestral = dfs(gfo)
-    arcosT = np.matrix.tolist(np.transpose(gfo.adj))
-
-    gfoT = Grafo()
-    gfoT.vertices = gfo.vertices
-    gfoT.adj = arcosT
-
-    tFimOrdenado = list(dict(sorted(tFim.items(), key=lambda item: item[1], reverse=True)).keys())
-    verticesVisitadosT, tInicioT, tFimT, ancestralT = dfsAdaptado(gfo, tFimOrdenado)
-    return ancestralT
+        tFimOrdenado = list(dict(sorted(tFim.items(), key=lambda item: item[1], reverse=True)).keys())
+        verticesVisitadosT, tInicioT, tFimT, ancestralT = self.dfs(gfoT, tFimOrdenado)
+        return ancestralT
 
 
 if __name__ == "__main__":
-    g1 = grafoDeEntrada("casos-de-teste/exemplo-cfc.txt", isDirigido=True)
-    a = componentesFortementeConexas(g1)
+    g1 = grafoDeEntrada("casos-de-teste/simpsons_amizades1.txt", isDirigido=True)
+    a = CFC()
+    a.componentesFortementeConexas(g1)
