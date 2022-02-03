@@ -19,6 +19,13 @@ class Grafo:
         rotulo = self.vertices[vert-1][1]
         return rotulo
 
+    def get_id_vertices(self):
+        ids = []
+        for v in self.vertices:
+            ids.append(v[0])
+        return ids
+
+
     def vizinhos(self, vert):
         pesoArestas = self.adj[vert-1]
         arestas = []
