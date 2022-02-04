@@ -7,6 +7,22 @@ class CFC():
     def __init__(self):
         self.tempoDfs = 0
         self.tempoDfsAdaptado = 0
+        self.listaCFC = []
+
+    def encontrarEncadeamento(self, conjunto: set, ancestralT: dict):
+        raiz = conjunto[-1]
+        for key, value in ancestralT.items():
+            if value == raiz:
+                conjunto.append(key)
+                self.encontrarEncadeamento(conjunto, ancestralT)
+
+    def formatCFC(self, ancestralT):
+        for key, value in ancestralT.items():
+            if value is None:
+                self.listaCFC.append([key])
+                self.encontrarEncadeamento(self.listaCFC[-1], ancestralT)
+        for cfc in self.listaCFC:
+            print(str(cfc)[1:-1])
 
     def dfsVisit(self, gfo: Grafo, v, verticesVisitados, tInicio, tFim, ancestral, isAdaptado=False):
         verticesVisitados[v] = True
@@ -50,7 +66,7 @@ class CFC():
 
         return verticesVisitados, tInicio, tFim, ancestral
 
-    def componentesFortementeConexas(self, gfo: Grafo):
+    def execute(self, gfo: Grafo):
         verticesVisitados, tInicio, tFim, ancestral = self.dfs(gfo)
         arcosT = np.matrix.tolist(np.transpose(gfo.adj))
 
@@ -60,10 +76,9 @@ class CFC():
 
         tFimOrdenado = list(dict(sorted(tFim.items(), key=lambda item: item[1], reverse=True)).keys())
         verticesVisitadosT, tInicioT, tFimT, ancestralT = self.dfs(gfoT, tFimOrdenado)
-        return ancestralT
+        self.formatCFC(ancestralT)
 
 
 if __name__ == "__main__":
-    g1 = grafoDeEntrada("casos-de-teste/simpsons_amizades1.txt", isDirigido=True)
-    a = CFC()
-    a.componentesFortementeConexas(g1)
+    g1 = grafoDeEntrada("casos-de-teste/exemplo-cfc.txt", isDirigido=True)
+    CFC().execute(g1)
