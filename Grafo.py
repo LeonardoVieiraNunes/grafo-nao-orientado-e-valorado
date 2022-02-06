@@ -1,5 +1,6 @@
 class Grafo:
-    def __init__(self):
+    def __init__(self, isDirigido=False):
+        self.isDirigido = isDirigido
         self.nroArestas = 0
         self.vertices = []
         self.adj = []
@@ -56,5 +57,6 @@ class Grafo:
 
     def addAresta(self, v1, v2, peso=1):
         self.adj[v1-1][v2-1] = peso
-        self.adj[v2-1][v1-1] = peso
+        if not self.isDirigido:
+            self.adj[v2-1][v1-1] = peso
         self.nroArestas += 1
