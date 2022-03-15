@@ -3,7 +3,7 @@ from lerEntrada import grafoDeEntrada
 import numpy as np
 
 
-class CFC():
+class CFC:
     def __init__(self):
         self.tempoDfs = 0
         self.tempoDfsAdaptado = 0
