@@ -50,6 +50,8 @@ class EmparelhamentoMaximo:
                     if self.DFS(x):
                         m += 1
 
+        return m, self.mate
+
 
     def BFS(self):
         fila = []
@@ -59,26 +61,35 @@ class EmparelhamentoMaximo:
                 fila.insert(0, v)
             else:
                 self.d[v] = float('inf')
-        self.d[-1] = float('inf')
+        self.d[None] = float('inf')
 
         while fila:
             v = fila.pop()
-            if self.d[v] < self.d[-1]:
+            if self.d[v] < self.d[None]:
                 vizinhos = self.gfo.vizinhos(v)
                 for vizinho in vizinhos:
                     if self.d[self.mate[vizinho]] == float('inf'):
                         self.d[self.mate[vizinho]] = self.d[v] + 1
                         fila.insert(0, self.mate[vizinho])
 
-        return self.d[-1] != float('inf')
+        return self.d[None] != float('inf')
 
     def DFS(self, x):
         if x is not None:
             for v in self.gfo.vizinhos(x):
-                if self.d[self.mate[v]] == self.mate[x] + 1:
-                    if self.DFS()
+                if self.d[self.mate[v]] == self.d[x] + 1:
+                    if self.DFS(self.mate[v]):
+                        self.mate[v] = x
+                        self.mate[x] = v
+                        return True
+            self.d[x] = float('inf')
+            return False
+        return True
+
+
 
 
 if __name__ == '__main__':
     g1 = grafoDeEntrada("casos-de-teste/exemplo-edmonds-karp.txt")
-    EmparelhamentoMaximo(g1).hopcroftKarp()
+    resultado = EmparelhamentoMaximo(g1).hopcroftKarp()
+    print(resultado)
